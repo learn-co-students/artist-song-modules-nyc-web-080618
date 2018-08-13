@@ -4,6 +4,8 @@ class Artist
   attr_accessor :name
   attr_reader :songs
 
+  extend Memorable
+
   @@artists = []
 
   def self.find_by_name(name)
@@ -11,7 +13,7 @@ class Artist
   end
 
   def initialize
-    @@artists << self
+    self.class.all << self
     @songs = []
   end
 
@@ -40,4 +42,8 @@ class Artist
     name.downcase.gsub(' ', '-')
   end
 
+
+  def self.find_by_name(name)
+    @@artists.detect {|a| a.name == name}
+  end
 end
